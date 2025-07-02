@@ -1,0 +1,19 @@
+{
+  "name": "sn01-backend",
+  "version": "1.0.0",
+  "description": "fashion e-commerce website",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
+  },
+  "keywords": [
+    "node.js",
+    "javascript"
+  ],
+  "author": "AjursInsights",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
