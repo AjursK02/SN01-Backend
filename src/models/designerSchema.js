@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const celebritySchema = new mongoose.Schema({
-  celebrity_name: { type: String, required: true },
-  celebrity_image: { type: String, required: true },
+const designerSchema = new mongoose.Schema({
+  designer_name: { type: String, required: true },
+  designer_image: { type: String, required: true },
   product_name: { type: String, required: true },
   product_image: { type: String, required: true },
   product_price: { type: String, default: null },
@@ -10,4 +10,4 @@ const celebritySchema = new mongoose.Schema({
   clickCount: { type: Number, default: 0 }
 }, { timestamps: true });
 
-module.exports = mongoose.model("Celebrities", celebritySchema);
+module.exports = mongoose.model("Designers", designerSchema);

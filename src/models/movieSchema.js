@@ -8,6 +8,8 @@ const movieSchema = new mongoose.Schema({
   product_name: String,
   product_price: String,
   product_link: String,
-}, { timestamps: true });
+  clickCount: { type: Number, default: 0 }
+},
+ { timestamps: true });
 
 module.exports = mongoose.model('Movies', movieSchema);

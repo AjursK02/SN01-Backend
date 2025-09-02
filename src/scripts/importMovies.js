@@ -3,6 +3,7 @@ const router = express.Router();
 const fs = require("fs");
 const path = require("path");
 const Movies = require("../models/movieSchema");
+const { verifyToken } = require("../middleware/authMiddleware");
 
 // Insert movie-based fashion data only if not already inserted
 router.get("/insert-movies", async (req, res) => {
@@ -29,7 +30,8 @@ router.get("/insert-movies", async (req, res) => {
 }
 });
 
-router.get("/movies", async (req, res) => {
+//  Protect this route so only logged-in users can fetch movies
+router.get("/movies", verifyToken, async (req, res) => {
   try {
     const products = await Movies.find({});
     res.status(200).json(products);

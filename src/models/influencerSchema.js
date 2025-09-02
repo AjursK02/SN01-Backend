@@ -7,6 +7,7 @@ const influencerSchema = new mongoose.Schema({
   product_image: { type: String, required: true },
   product_price: { type: String, default: null },
   product_link: { type: String, required: true },
+  clickCount: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model("Influencers", influencerSchema);
