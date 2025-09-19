@@ -36,8 +36,8 @@ exports.googleAuth = async (req, res) => {
     // Set cookie
     res.cookie("token", authToken, {
       httpOnly: true,
-      // secure: process.env.NODE_ENV === "production",
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
+      // secure: true,
       sameSite: "none",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
