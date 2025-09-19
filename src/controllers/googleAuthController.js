@@ -39,7 +39,7 @@ exports.googleAuth = async (req, res) => {
       secure: process.env.NODE_ENV === "production",
       // secure: true,
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      domain: ".onrender.com",
+      domain: "sanav-backened.onrender.com",
       path: "/",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
