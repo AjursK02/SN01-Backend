@@ -1,16 +1,18 @@
 const express = require("express");
 const router = express.Router();
-const { signup } = require("../controllers/signupController");
-const { login } = require("../controllers/loginController");
+// const { signup } = require("../controllers/signupController");
+// const { login } = require("../controllers/loginController");
 const { logout } = require("../controllers/logoutController");
 // const { authenticateUser } = require("../middleware/authMiddleware");
 const User = require("../models/userSchema");
 const { verifyToken } = require("../middleware/authMiddleware");
 const { getMe } = require("../controllers/meController");
+const { googleAuth } = require("../controllers/googleAuthController");
 
 
-router.post("/signup", signup);
-router.post("/login", login);
+// router.post("/signup", signup);
+// router.post("/login", login);
+router.post("/google", googleAuth);
 router.post("/logout", verifyToken, logout);
 // router.get("/me", verifyToken, getMe);
 router.get("/me", (req, res, next) => {

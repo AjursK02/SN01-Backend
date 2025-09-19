@@ -13,6 +13,7 @@ const authRoutes = require("./routes/authRoutes");
 const statsRoutes = require("./routes/adminStatsRoutes")
 const topOutfitsRoutes = require("./routes/topOutfitsRoutes")
 const profileRoutes = require("./routes/profileRoutes");
+const lookTrackerRoutes = require("./routes/lookTrackerRoutes");
 
 
 
@@ -41,6 +42,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/admin/stats", statsRoutes)
 app.use("/api/topOutfits", topOutfitsRoutes)
 app.use("/api/profile", profileRoutes);
+app.use("/api/look-tracker", lookTrackerRoutes);
 
 
 

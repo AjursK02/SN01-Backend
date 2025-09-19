@@ -9,50 +9,88 @@ const Designers = require("../models/designerSchema");
 const { verifyToken } = require("../middleware/authMiddleware");
 
 // GET Look Tracker Outfits
-router.get("/look-tracker", verifyToken, async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     if (!user) return res.status(404).json({ error: "User not found" });
 
-    // Fetch outfits from each collection using favorites
-    const celebrityOutfits = await Celebrities.find({
-      name: { $in: user.favoriteCelebrity },
-    });
+    // Collect all favorites
+    const {
+      favoriteCelebrity = [],
+      favoriteInfluencer = [],
+      favoriteMovie = [],
+      favoriteTvShow = [],
+      favoriteDesigner = []
+    } = user;
 
-    const influencerOutfits = await Influencers.find({
-      name: { $in: user.favoriteInfluencer },
-    });
 
-    const movieOutfits = await Movies.find({
-      name: { $in: user.favoriteMovie },
-    });
+    // Fetch from each collection
+    const celebOutfits = await Celebrities.find({ celebrity_name: { $in: favoriteCelebrity } });
+    const influencerOutfits = await Influencers.find({ influencer_name: { $in: favoriteInfluencer } });
+    const movieOutfits = await Movies.find({ movie_name: { $in: favoriteMovie } });
+    const tvShowOutfits = await TvShows.find({ show_name: { $in: favoriteTvShow } });
+    const designerOutfits = await Designers.find({ designer_name: { $in: favoriteDesigner } });
 
-    const tvShowOutfits = await TvShows.find({
-      name: { $in: user.favoriteTvShow },
-    });
+//     console.log({
+//   celebCount: celebOutfits.length,
+//   influencerCount: influencerOutfits.length,
+//   movieCount: movieOutfits.length,
+//   tvShowCount: tvShowOutfits.length,
+//   designerCount: designerOutfits.length,
+// });
 
-    const designerOutfits = await Designers.find({
-      name: { $in: user.favoriteDesigner },
-    });
-
-    // Merge all results
-    let outfits = [
-      ...celebrityOutfits,
+    // Merge all outfits
+    let allOutfits = [
+      ...celebOutfits,
       ...influencerOutfits,
       ...movieOutfits,
       ...tvShowOutfits,
       ...designerOutfits,
     ];
 
-    // Shuffle array (randomize order)
-    outfits = outfits.sort(() => 0.5 - Math.random());
+    // Randomly pick 4
+    const shuffled = allOutfits.sort(() => 0.5 - Math.random());
+    const selectedOutfits = shuffled.slice(0, 4);
 
-    // Select only 8 items
-    outfits = outfits.slice(0, 8);
-
-    res.json(outfits);
+    res.json({ outfits: selectedOutfits });
   } catch (err) {
-    console.error("Error in /look-tracker:", err);
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
+// GET all favorites (full page)
+router.get("/all", verifyToken, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const {
+      favoriteCelebrity = [],
+      favoriteInfluencer = [],
+      favoriteMovie = [],
+      favoriteTvShow = [],
+      favoriteDesigner = [],
+    } = user;
+
+    const celebOutfits = await Celebrities.find({ celebrity_name: { $in: favoriteCelebrity } });
+    const influencerOutfits = await Influencers.find({ influencer_name: { $in: favoriteInfluencer } });
+    const movieOutfits = await Movies.find({ movie_name: { $in: favoriteMovie } });
+    const tvShowOutfits = await TvShows.find({ show_name: { $in: favoriteTvShow } });
+    const designerOutfits = await Designers.find({ designer_name: { $in: favoriteDesigner } });
+
+    let allOutfits = [
+      ...celebOutfits,
+      ...influencerOutfits,
+      ...movieOutfits,
+      ...tvShowOutfits,
+      ...designerOutfits,
+    ];
+
+    res.json({ outfits: allOutfits });
+  } catch (err) {
+    console.error(err);
     res.status(500).json({ error: "Server error" });
   }
 });
