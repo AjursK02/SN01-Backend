@@ -24,8 +24,8 @@ const cors = require("cors");
 const app = express();
 // app.use(cors()); // Enable CORS for all routes
 app.use(cors({
-  // origin: "http://localhost:8080", // frontend dev URL
-  origin: ["http://localhost:3000", "https://sanav.vercel.app"],
+  origin: "http://localhost:8080", // frontend dev URL
+  // origin: ["http://localhost:8080", "https://sanav.vercel.app"],
   credentials: true // allow cookies
 }));
 
