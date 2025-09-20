@@ -35,13 +35,18 @@ exports.googleAuth = async (req, res) => {
 
     // Set cookie
     res.cookie("token", authToken, {
+      // httpOnly: true,
+      // secure: process.env.NODE_ENV === "production",
+      // // secure: true,
+      // sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      // domain: "sanav-backened.onrender.com",
+      // path: "/",
+      // maxAge: 7 * 24 * 60 * 60 * 1000,
+
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      // secure: true,
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      domain: "sanav-backened.onrender.com",
-      path: "/",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
+  secure: process.env.NODE_ENV === "production" ? true : false, 
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.status(200).json({
