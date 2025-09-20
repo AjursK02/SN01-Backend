@@ -4,6 +4,7 @@ const User = require("../models/userSchema");
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+//Google Authentication
 exports.googleAuth = async (req, res) => {
   try {
     const { token } = req.body; // frontend sends Google ID token
